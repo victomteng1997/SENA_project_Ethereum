@@ -1,0 +1,15 @@
+SELECT * FROM price limit 1
+SELECT * FROM price limit 2
+SELECT * FROM price limit 5
+SELECT * FROM price limit 10
+SELECT * FROM price limit 20
+SELECT * FROM price limit 50
+SELECT * FROM price limit 100
+SELECT * FROM price limit 200
+SELECT * FROM price limit 500
+SELECT * FROM price limit 1000
+SELECT * FROM price limit 2000
+SELECT * FROM price limit 5000
+SELECT * FROM price limit 10000
+SELECT * FROM price limit 20000
+SELECT * FROM price limit 50000

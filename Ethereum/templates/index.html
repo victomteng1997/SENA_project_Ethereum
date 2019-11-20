@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Welcome to A*STAR</title>
+    <style>
+    body {
+    /*background:  #f3f2f2;*/
+    background:  #BBD0F0;
+    }
+    .row {
+    height: 100vh;
+    }
+    .form {
+    background:  #ffffff; 
+    border-radius:  4px; 
+    box-shadow:  0px 2px 6px -1px rgba(0,0,0,.12);
+    }
+    .image img {
+    width: 220px;
+    height: auto;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    }
+    .my-form {
+    padding: 2rem;
+    }
+    .my-form h4 {
+    color: #92aad0;
+    }
+    .my-form p {
+    font-size: .875rem;
+    font-weight: 400;
+    }
+    .btn {
+    background-color: #92aad0;
+    right: 0;
+    }
+    .btn:hover, .btn:active, .btn:focus {
+    color: #fff;
+    }
+    a {
+    bottom: 0;
+    }
+    .space {
+    padding-bottom: 4rem;
+    }
+    .link {
+    font-size: .875rem;
+    /*float: right;*/
+    color: #6582B0;
+    }
+    .link:hover, .link:active {
+    color: #426193;
+    }
+    @-webkit-keyframes autofill {
+    to {
+        color: #666;
+        background: transparent; } }
+
+    @keyframes autofill {
+    to {
+        color: #666;
+        background: transparent; } }
+
+    input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both; }
+
+    .list-group{
+    max-height: 92vh;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+    }
+    .bottomleft {
+      position: absolute;
+      bottom: 8px;
+      /*left: 16px;*/
+      font-size: 8px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row d-flex justify-content-center align-items-start" style="padding-top:30px;">
+    <div class="col-lg-5 col-md-6">
+      <div class="form d-flex justify-content-between" style="margin-bottom:1rem;";>
+        <form action="/" class="my-form" method="POST">
+          <h4 class="font-weight-bold mb-3">Submit your query now!</h4>
+          <p class="mdb-color-text">
+            Please enter your account address and query text in the form below.
+            <a class="link" href="#!">FAQs</a>
+          </p>
+
+          <div class="md-form md-outline">
+            <i class="fas fa-id-badge prefix"></i>
+            <input type="text" name="address" id="accountText" class="form-control" required>
+            <label for="accountText">Account Address</label>
+          </div>
+
+          <div class="md-form md-outline">
+            <i class="fas fa-search prefix"></i>
+            <textarea class="form-control" name="content" rows="3" id="queryTextarea" required></textarea>
+            <label for="queryTextarea">Database Query</label>
+          </div>
+          <div class="space">
+            <div class="float-right">
+              <button class="btn btn-rounded" type="submit">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-7 col-md-6">
+      <div class="panel panel-primary" id="result_panel">
+        <div class="panel-heading"></div>
+        <div class="panel-body">
+            <ul class="list-group" style="border-radius:4px;">
+              <li class="list-group-item">
+                <h4 class="font-weight-bold mb-3" style="color:#92aad0;margin-top:20px;">Query History</h4>
+              </li>
+              {% if queries|length < 1 %}
+              <li class="list-group-item">
+                <h6 style="text-align: center">There are no queries. Submit one through the form on the left!</h6>
+              </li>
+              {% else %}
+                  {% for q in queries %}
+                  <li class="list-group-item" style="padding-top:.25rem; padding-bottom:.25rem;">
+                      <strong>{{ q.content }}</strong>
+                      <div class="small"><i class="fas fa-user prefix"></i>
+                          {{ q.user }}
+                      </div>
+                      <div class="small"><i class="fas fa-info-circle prefix"></i>
+                          {{ q.status }}
+                      </div>
+                      <div class="small"><i class="fas fa-clock prefix"></i>
+                          {{ q.date_submitted.strftime("%Y-%m-%d %H:%M:%S") }}
+                          <a class="link" style="float: right; margin-left:.5rem;" href="/delete/{{q.id}}">Delete</a>
+                          <a class="link" style="float: right; margin-left:.5rem;" href="/update/{{q.id}}">Update</a>
+                      </div>
+                  </li>
+                  {% endfor %}
+
+              {% endif %}
+            </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+    <img class="bottomleft"
+      src="static/img/artc_logo.png" 
+      style="z-index:-1;width:130px;margin-bottom:25px;">
+    <img class="bottomleft"
+      src="static/img/i2r_logo.png" 
+      style="z-index:-1;width:130px;margin-left:145px;margin-bottom:25px;">
+    <strong class="bottomleft" style="color:#fff;margin-bottom:10px;">Copyright reserved by A*STAR @ 2019</strong>
+
+</div>
+{% endblock %}
