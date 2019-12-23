@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from ethquery import exec_query
 import json
+from config import *
 
 #initialize Flask
 app = Flask(__name__)

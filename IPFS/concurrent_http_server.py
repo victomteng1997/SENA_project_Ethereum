@@ -3,6 +3,7 @@ import os
 import random
 import time
 from datetime import datetime
+from config import *
 
 import ipfscluster
 import ipfshttpclient
@@ -90,7 +91,7 @@ def Main():
     # mainclient = ipfshttpclient.connect()
 
     host = ''
-    port = 7147
+    port = IPFS_port
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

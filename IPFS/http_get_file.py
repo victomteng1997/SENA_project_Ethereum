@@ -9,6 +9,7 @@ import ipfshttpclient
 
 from _thread import *
 import threading 
+from config import *
 
 print_lock = threading.Lock() 
 
@@ -39,7 +40,7 @@ def Main():
     mainclient = ipfshttpclient.connect()
 
     host = ''
-    port = 7417
+    port = IPFS_port
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

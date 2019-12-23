@@ -1,5 +1,6 @@
 import socket
 import sys
+from config import *
 
 def main():
     '''
@@ -11,8 +12,8 @@ def main():
     f = open(file_name, 'r')
 
     # Set the IP and Port for the Server
-    host = "10.217.135.233"
-    port = 7147
+    host = IPFS_host
+    port = IPFS_port
 
     # Connect to the server
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -47,8 +48,8 @@ def upload(file_name):
     f = open(file_name, 'r')
 
     # Set the IP and Port for the Server
-    host = "10.217.135.233"
-    port = 7147
+    host = IPFS_host
+    port = IPFS_port
 
     # Connect to the server
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:

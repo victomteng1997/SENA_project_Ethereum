@@ -7,6 +7,7 @@ import ipfshttpclient
 
 from _thread import *
 import threading 
+from config import *
 
 print_lock = threading.Lock() 
 
@@ -91,8 +92,8 @@ def Main():
     # mainclient = ipfshttpclient.connect()
 
     # Set the IP and Port for the Server
-    host = '10.217.135.233'
-    port = 7147
+    host = IPFS_host
+    port = IPFS_port
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     try:

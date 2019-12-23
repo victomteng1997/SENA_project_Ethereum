@@ -1,6 +1,7 @@
 import socket
 import sys
 import random
+from config import *
 
 def main():
     '''
@@ -11,8 +12,8 @@ def main():
     hash = sys.argv[1]
 
     # Set the IP and Port for the Server
-    host = "10.217.135.233"
-    port = 7417
+    host = IPFS_host
+    port = IPFS_port
 
     # Connect to the server
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
