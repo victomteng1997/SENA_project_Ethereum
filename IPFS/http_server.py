@@ -22,10 +22,10 @@ def threaded(conn, client):
     while True:
         # create file that will be inserted into IPFS
         f = open('socket_file.txt', 'a+')
-
+        
         # Take in data from client 
         data = conn.recv(1024) 
-        print(data)
+        print("received the following data: ", data)
 
         # If connection closed by client add file to IPFS -- CHANGE to handle as ARTC want -- potentially delete file and connection
         if not data:
@@ -35,26 +35,27 @@ def threaded(conn, client):
               
             # lock released on exit 
             print_lock.release() 
+            f.close()
             break
         else:
             # Server has recieved data
             # Convert Data from Bytes to String
-            input = data.decode("utf-8")
+            decoded_data = data.decode("utf-8")
 
             # Check recieved data to see if the end of file has been sent.
             finish = "This is the end of the file: " + connection_secret
-            end = input.find(finish)
+            end = decoded_data.find(finish)
             if(end != -1):
                 message_sent = True
                 print("\n\n\n")
 
                 # Remove the end of file indicator from the data being added to the file
-                data = print(input[:end])
-                input = input[:end]
+                data = print(decoded_data[:end])
+                decoded_data = decoded_data[:end]
 
             # Add recieved data to the file
-            f.write(input)
-        
+            f.write(decoded_data)
+            f.close()
         # If end of message from client add the file to IPFS and close connection
         if message_sent:
             h = ipfs_add(client) 
@@ -65,6 +66,7 @@ def threaded(conn, client):
         
             # lock released on exit 
             print_lock.release() 
+            f.close()
             break  
     # connection closed 
     conn.close()
@@ -72,6 +74,10 @@ def threaded(conn, client):
 
 # Add file to IPFS cluster and return the hash
 def ipfs_add(client):
+    f = open('socket_file.txt')
+    content = f.readlines()
+    print("Uploading these data to ipds: ", content)
+    f.close()
     h = client.add_files('socket_file.txt')['cid']['/']
 
     if os.path.exists("socket_file.txt"):

@@ -22,7 +22,8 @@ def threaded(conn, mainclient, addr):
 
     end_of_file = "This is the end of the file: " + split_inputs[0]
 
-    data = ipfs_get(mainclient, split_inputs[1])  kllm,9-'pj9p l'
+    data = ipfs_get(mainclient, split_inputs[1])
+    print('data: ', data)
     conn.sendall(data)
     conn.sendall(str.encode(end_of_file))  
     conn.close()
@@ -40,7 +41,7 @@ def Main():
     mainclient = ipfshttpclient.connect()
 
     host = ''
-    port = IPFS_port
+    port = IPFS_file_port
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
