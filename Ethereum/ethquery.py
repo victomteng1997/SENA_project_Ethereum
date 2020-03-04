@@ -12,7 +12,7 @@ from web3 import Web3
 from web3.auto import w3
 from solc import compile_source
 from web3.contract import ConciseContract
-import tkinter as tk
+
 
 def build_contract():
     '''
@@ -154,19 +154,20 @@ def implement_ethereum(storevar,key,var):
     #meanwhile, store the same data into the a txt file.
     ticks = time.time()
     f = open(str(ticks),'w')
-    content = 'output :\n' + str(output) + '\nerror: \n' + str(error)
-    f.writelines(content)
+    # content = 'output :\n' + str(output) + '\nerror: \n' + str(error)
+    f.writelines(str(output))
     f.close()
 
     #Then upload
     try:
-        upload(str(ticks))
+        output = upload(str(ticks))
     except Exception as e:
         print("Unexpected Error: %s"%str(e))
+        return False
     #Then delete
     os.remove(str(ticks))
     
-    return implementation_output
+    return output
 
 #def show_entry_fields():
 #    print("Public key: %s\nCommand: %s\nImplementation Result: %s" % (e1.get(), e2.get(), #implement_ethereum(str(e1.get()),str(e2.get()))))
@@ -193,14 +194,16 @@ def exec_query(address, content):
         abi=abi,
     )
     
-    implement_ethereum(storevar,address,content)
+    output = implement_ethereum(storevar,address,content)
     # return some result (for testing only)
-    result = True
     msg = "Done"
-    return result, msg
+    return msg, output
 
 # A sample query for testing
-#exec_query("0xd7ff8F6899bbBBA26bcD086c1Fc638E207e9A50F","curl www.google.com")
+#print(w3.eth.accounts[0])
+#exec_query("0xb5f6bD0B1bbCEB0B952a9E4C0ea6AB3EA0DefCdD","curl www.google.com")
+
+
 
 
     

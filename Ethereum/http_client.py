@@ -61,8 +61,10 @@ def upload(file_name):
         print(random_secret)
 
         # Send all the data to the server.
-        for file_line in f:
-            s.sendall(str.encode(file_line))
+        file_line = f.read()
+        #s.sendall(str.encode(file_line))
+        print("uploading: ",file_line)
+        s.sendall(file_line.encode())
 
         # Send back the random number to indicate finish
         finish = "This is the end of the file: " + random_secret
@@ -70,7 +72,9 @@ def upload(file_name):
 
         # Recieve the Hash from the Server this will be used to access the file in IPFS
         data = s.recv(1024)
-        print("Hash: " + data.decode('utf-8'))
+        output = "Hash: " + data.decode('utf-8')
+        print(output)
+        return output
   
 
 

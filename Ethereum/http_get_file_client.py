@@ -3,17 +3,18 @@ import sys
 import random
 from config import *
 
-def main():
+def main(hash):
     '''
     Download file from IPFS system
     :return: None
     '''
+    output = ''
     #Open the file containing the data to be sent to IPFS
-    hash = sys.argv[1]
+    #hash = sys.argv[1]
 
     # Set the IP and Port for the Server
     host = IPFS_host
-    port = IPFS_port
+    port = IPFS_file_port
 
     # Connect to the server
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -27,7 +28,7 @@ def main():
         while True:
 
             message_sent = False
-            data = s.recv(1024) 
+            data = s.recv(2048) 
             
             # When client closes the connection before end of file received
             if not data:
@@ -47,17 +48,19 @@ def main():
                     # print("\n End of File Found \n\n")
                     
                     input = input[:end]
-                print(input)
-
+                print("input", input)
+                output += input
             if message_sent:
                 print('Bye') 
             
                 break  
         s.close()
+        print("Done")
+        return output
     
 
 
 if __name__ == "__main__":
     print('Number of arguments:', len(sys.argv), 'arguments.')
     print('Argument List:', str(sys.argv[1]))
-    main()
+    main(str(sys.argv[1]))
