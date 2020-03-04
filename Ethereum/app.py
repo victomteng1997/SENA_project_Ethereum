@@ -3,6 +3,7 @@ from flask_restful import reqparse, abort, Api, Resource
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from ethquery import exec_query
+from http_get_file_client import main
 import json
 from config import *
 
@@ -51,12 +52,27 @@ def index():
             new_query.result = result
             new_query.status = status
             db.session.commit()
-            return redirect('/')
-        except:
-            return 'There was an issue adding your task'
+            #return redirect('/')
+            return render_template("output.html", value=str(result))
+        except Exception as e:
+            return str(e)
+            #return 'There was an issue adding your task'
     else:
         queries = UserQuery.query.order_by(UserQuery.date_submitted.desc()).all()
         return render_template('index.html', queries=queries)
+
+@app.route('/query/', methods=['POST','GET'])
+def query():
+    if request.method=='POST':
+        my_hash = request.form['Hash']
+        result = main(my_hash)
+        result = result[2:-1] # 'to remove the b' and begining and ' and the end
+        final = result.replace('\\n','\n')
+        print(final)
+        return render_template("query_output.html", value=str(final))
+    else:
+        return render_template('query.html')
+
 
 @app.route('/delete/<int:id>', methods=['GET'])
 def delete(id):
